@@ -30,7 +30,6 @@
 5. Return the newly optimized tour
 6. Print the shortest tour and its distance
 7. Save the shortest tour as an ordered list of the index numbers of cities to the corresponding output file
--------
 
 *Variables*
 - `input_file` - name of the input file
@@ -58,7 +57,7 @@
 
 - `distance()`
   - Domain Parameter(s): city1, city2
-  - Range: euclidian_distance
+  - Range: euclidean_distance
 
 - `compute_total()`
   - Domain Parameter(s): tour, cities
