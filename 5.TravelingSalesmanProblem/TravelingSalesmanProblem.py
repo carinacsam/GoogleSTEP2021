@@ -14,7 +14,7 @@ def distance(city1, city2):
     return euclidean_distance
 
 #Calculates the total tour distance
-def compute_total(tour,cities):
+def compute_total(tour, cities):
     total_distance = 0
     for i in range(len(tour) - 1):
         #Adds distance between current tour and next tour to total distance
@@ -56,8 +56,7 @@ def solve_greedy(start_city, cities):
         current_city = next_city
     return tour #Tour created using the algorithm is returned
 
-#Swaps the endpoints of two edges by reversing a section of nodes,
-#to eliminate crossovers
+#Swaps the endpoints of two edges by reversing a section of nodes, to eliminate crossovers
 def swap_2opt(tour, city1, city2):
     n = len(tour)
     #Assert that the first city passed in is inside the tour
@@ -68,50 +67,56 @@ def swap_2opt(tour, city1, city2):
     new_tour = tour[0:city1]
     #Add the reversed of the tour from the first city to the second city to the new tour
     new_tour.extend(reversed(tour[city1:city2 + 1]))
-    #Add the 
+    #Add the rest of the tour after the swapped cities
     new_tour.extend(tour[city2+1:])
     assert len(new_tour) == n
-    return new_tour #New tour after swap was made is returned
+    return new_tour #New tour after swap is returned
 
 #Solves the tsp using 2-opt algorithm
 #Optimizes the route using the 2-opt swap until no improved tour is found
 #@source: https://en.wikipedia.org/wiki/2-opt
 def solve_2opt(tour, cities):
-    improvement = True
-    best_tour = tour
+    improvement = True #Initialize the flag to indicate need for improvement
+    best_tour = tour 
     best_distance = compute_total(tour, cities)
-    while improvement:
-        improvement = False
+    while improvement: 
+        improvement = False #Improvement will be addressed in iteration
         for i in range(len(best_tour) - 1):
             for j in range(i+1, len(best_tour)):
-                new_tour = swap_2opt(best_tour, i, j)
-                new_distance = compute_total(new_tour, cities)
-                if new_distance < best_distance:
-                    best_distance = new_distance
+                #Iterate through tour and swap
+                new_tour = swap_2opt(best_tour, i, j) 
+                new_distance = compute_total(new_tour, cities) 
+                #If new distance is greater than best distance so far, set new best tour and distance
+                if new_distance < best_distance: 
+                    best_distance = new_distance 
                     best_tour = new_tour
+                    #Set improvement as true to indicate that there's more room for improvement
                     improvement = True
                     break #Improvement found, return to the top of the while loop
-    return best_tour #Best tour after algorithm is executed is returned
+    return best_tour #Best tour after the algorithm is executed is returned
 
 
-#Solve TSP using greedy and 2-opt algorithms
-#Start tour with a random city
+#Solve TSP using greedy and 2-opt algorithms, starting from a random city
 #Find the shortest distance of the shortest_tour
 def solve_tsp_tour(cities):
     n = len(cities)
     shortest_tour = None
     shortest_distance = -1
+    #Choose random city indexes
     for start_city in random.sample(range(n),5):
-        tour = solve_greedy(start_city,cities)
+        #Run Greedy first, and then 2opt to improve the tour
+        tour = solve_greedy(start_city, cities)
         tour = solve_2opt(tour,cities)
-        total_distance = compute_total(tour,cities)
+        total_distance = compute_total(tour, cities)
+        #If the total distance calculated is the shortest so far
         if shortest_distance < 0 or shortest_distance > total_distance:
+            #Set shortest distance to the computed total distance and shortest tour to current tour
             shortest_distance = total_distance
             shortest_tour = tour
-    return shortest_tour,shortest_distance
+    return shortest_tour, shortest_distance #Returns the shortest tour and its distance
 
-#   Main program reads the input files, calls solve_tsp_tour for the input_file
-#   Prints the tour and distance and saves to output file
+#Main program reads the input files, calls solve_tsp_tour for the input_file
+#Prints the tour and distance and saves to output file
 def main(input_file):
     cities = read_input(input_file)
     shortest_tour, shortest_distance = solve_tsp_tour(cities)
