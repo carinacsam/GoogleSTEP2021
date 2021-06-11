@@ -59,10 +59,6 @@ def solve_greedy(start_city, cities):
 #Swaps the endpoints of two edges by reversing a section of nodes, to optimize for the shortest path
 def swap_2opt(tour, city1, city2):
     n = len(tour)
-    #Assert that the first city passed in is inside the tour
-    assert city1 >= 0 and city1 < (n - 1)
-    #Asserts that second city comes after the first city, and that it is inside the tour
-    assert city2 > city1 and city2 < n
     #Set the new tour as the tour from the start of the passed in tour up to the first city
     new_tour = tour[0:city1]
     #Add the reversed of the tour from the first city to the second city to the new tour
