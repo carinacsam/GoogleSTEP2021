@@ -17,9 +17,9 @@ def distance(city1, city2):
 def compute_total(tour, cities):
     total_distance = 0
     for i in range(len(tour) - 1):
-        #Adds distance between current tour and next tour to total distance
+        #Adds distance between current city and next city to total distance
         total_distance += distance(cities[tour[i]], cities[tour[i + 1]])
-    #Adds distance between first tour and the tour before it
+    #Adds distance between first city and the city before it
     total_distance += distance(cities[tour[-1]], cities[tour[0]])
     return total_distance #Returns the total distance computed
 
@@ -35,9 +35,9 @@ def solve_greedy(start_city, cities):
             #Calculate the Euclidean distances between cities
             dist[i][j] = dist[j][i] = distance(cities[i], cities[j])
     current_city = start_city
-    #Set is created for us to track all the unvisted cities
+    #Set is created to track all the unvisted cities
     unvisited_cities = set(range(0, N))
-    #The first city is removed from the set, indicating that we've visited it
+    #The first city is removed from the set, indicating that it was visited
     unvisited_cities.remove(current_city)
     #Tour is then set to list with the first city
     tour = [current_city]
