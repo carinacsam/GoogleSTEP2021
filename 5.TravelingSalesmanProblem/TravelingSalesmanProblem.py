@@ -91,10 +91,10 @@ def solve_2opt(tour, cities):
     return best_tour #Best tour after the algorithm is executed is returned
 
 #Swaps certain endpoints between three edges by reversing sections of nodes to optimize for the shortest path
-def swap_3opt(tour,cities,a, b, c):
+def swap_3opt(tour, cities, city1, city2, city3):
     #Given a tour with segments 1-2, 3-4, 5-6 
-    tour1, tour3, tour5 = tour[a-1], tour[b-1], tour[c-1]
-    tour2, tour4, tour6 = tour[a], tour[b], tour[c%len(tour)]
+    tour1, tour3, tour5 = tour[city1-1], tour[city2-1], tour[city3-1]
+    tour2, tour4, tour6 = tour[city1], tour[city2], tour[city3 % len(tour)]
 
     #Calculate the total distance for the tour with segments 1-2, 3-4, 5-6
     dist1 = distance(cities[tour1], cities[tour2]) + distance(cities[tour3],
@@ -123,7 +123,7 @@ def swap_3opt(tour,cities,a, b, c):
     elif dist1 > dist4:
         newPath = tour[b:c] + tour[a:b] 
         tour[a:c] = newPath #Two-step swap (Case 7)
-    return tour #final tour
+    return new_tour #New tour after swap is returned
 
 #Solves the tsp using 3-opt algorithm
 def solve_3opt(tour, cities):
@@ -133,7 +133,7 @@ def solve_3opt(tour, cities):
         for j in range(i+1, n):
             for k in range(j+1, n + (i>0)):
                 new_tour = swap_3opt(tour, cities, i, j, k)
-    return new_tour
+    return best_tour #Best tour so far is returned
 
 
 #Solve TSP using greedy, 3-opt and 2-opt algorithms, starting from a random city

@@ -20,16 +20,25 @@
         2. Add next_city to the tour
         3. Set current_city = next_city to iterate
     7. Return the resulting tour
-4. Execute the 2-Opt algorithm using the method solve_2opt() to further improve tour
+4. Execute the 3-Opte algorithm using the method solve_3opt() to improve tour
+    1. Refer to the following showing the different 3-Opt cases: [3-Opt Diagram](https://ibb.co/1nBSMPZ)
+    2. Iterate for all possible combinations of three edges in the given tour
+        1. Call swap_3opt() for all combination of the three segments 
+        2. Create a subset of tour with segments 1-2, 3-4 and 5-6
+        3. Calculate the distances for the subtours 
+        4. Swap the segments by comparing the distances of the subtours 
+        5. Reverse the segments for cases 4-7 only
+        6. Case 1-3 will be completed by the 2-opt swap function
+5. Execute the 2-Opt algorithm using the method solve_2opt() to further improve tour
     1. Set best_tour as our previously created tour and best_distance as the computed total distance of our tour
         1. Find a segment that crosses over itself
         2. Reorder the segment so that it does not cross
         3. Calculate the new distance of the tour after the swap
     2. Repeat until no improvements can be made
     3. If new tour distance after swap is less than the distance of the given tour then return new tour
-5. Return the newly optimized tour
-6. Print the shortest tour and its distance
-7. Save the shortest tour as an ordered list of the index numbers of cities to the corresponding output file
+6. Return the newly optimized tour
+7. Print the shortest tour and its distance
+8. Save the shortest tour as an ordered list of the index numbers of cities to the corresponding output file
 
 *Variables*
 - `input_file` - name of the input file
@@ -47,12 +56,20 @@
   - Domain Parameter(s): start_city, cities
   - Range: tour
 
+- `solve_3opt()`
+  - Domain Parameter(s): tour, cities
+  - Range: best_tour
+
+- `swap_3opt()`
+  - Domain Parameter(s): tour, cities, city1, city2, city3
+  - Range: new_tour
+
 - `solve_2opt()`
   - Domain Parameter(s): tour, cities
   - Range: best_tour
 
 - `swap_2opt()`
-  - Domain Parameter(s): tour, i, k
+  - Domain Parameter(s): tour, city1, city2
   - Range: new_tour
 
 - `distance()`
