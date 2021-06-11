@@ -56,7 +56,7 @@ def solve_greedy(start_city, cities):
         current_city = next_city
     return tour #Tour created using the algorithm is returned
 
-#Swaps the endpoints of two edges by reversing a section of nodes, to eliminate crossovers
+#Swaps the endpoints of two edges by reversing a section of nodes, to optimize for the shortest path
 def swap_2opt(tour, city1, city2):
     n = len(tour)
     #Assert that the first city passed in is inside the tour
@@ -74,7 +74,6 @@ def swap_2opt(tour, city1, city2):
 
 #Solves the tsp using 2-opt algorithm
 #Optimizes the route using the 2-opt swap until no improved tour is found
-#@source: https://en.wikipedia.org/wiki/2-opt
 def solve_2opt(tour, cities):
     improvement = True #Initialize the flag to indicate need for improvement
     best_tour = tour 
@@ -95,8 +94,53 @@ def solve_2opt(tour, cities):
                     break #Improvement found, return to the top of the while loop
     return best_tour #Best tour after the algorithm is executed is returned
 
+#Swaps certain endpoints between three edges by reversing sections of nodes to optimize for the shortest path
+def swap_3opt(tour,cities,a, b, c):
+    #Given a tour with segments 1-2, 3-4, 5-6 
+    tour1, tour3, tour5 = tour[a-1], tour[b-1], tour[c-1]
+    tour2, tour4, tour6 = tour[a], tour[b], tour[c%len(tour)]
 
-#Solve TSP using greedy and 2-opt algorithms, starting from a random city
+    #Calculate the total distance for the tour with segments 1-2, 3-4, 5-6
+    dist1 = distance(cities[tour1], cities[tour2]) + distance(cities[tour3],
+                cities[tour4]) + distance(cities[tour5], cities[tour6])
+    #Calculate the total distance for the tour with segments 1-3, 2-4, 5-6
+    dist2 = distance(cities[tour1], cities[tour3]) + distance(cities[tour2],
+                cities[tour4]) + distance(cities[tour5], cities[tour6])
+    #Calculate the total distance for the tour with segments 1-2, 3-5, 4-6
+    dist3 = distance(cities[tour1], cities[tour2]) + distance(cities[tour3],
+                cities[tour5]) + distance(cities[tour4], cities[tour6])
+    #Calculate the total distance for the tour with segments 1-4, 5-2, 3-6
+    dist4 = distance(cities[tour1], cities[tour4]) + distance(cities[tour5],
+                cities[tour2]) + distance(cities[tour3], cities[tour6])
+    #Calculate the total distance for the tour with segments 6-2, 3-4, 5-1
+    dist5 = distance(cities[tour6], cities[tour2]) + distance(cities[tour3],
+                cities[tour4]) + distance(cities[tour5], cities[tour1])
+
+    #See corresponding diagram in Design Doc for cases:
+    #(Case 1, 2, 3 are completed by the 2-opt swap)
+    if dist1 > dist3:
+        tour[b:c] = reversed(tour[b:c]) #Swap 2-3 (Case 4)
+    elif dist1 > dist2:
+        tour[a:b] = reversed(tour[a:b]) #Swap 1-2 (Case 5)
+    elif dist1 > dist5:
+        tour[a:c] = reversed(tour[a:c]) #Swap 1-3 (Case 6)
+    elif dist1 > dist4:
+        newPath = tour[b:c] + tour[a:b] 
+        tour[a:c] = newPath #Two-step swap (Case 7)
+    return tour #final tour
+
+#Solves the tsp using 3-opt algorithm
+def solve_3opt(tour, cities):
+    n = len(tour)
+    #Iterates between all possible combinations of three edges
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n + (i>0)):
+                new_tour = swap_3opt(tour, cities, i, j, k)
+    return new_tour
+
+
+#Solve TSP using greedy, 3-opt and 2-opt algorithms, starting from a random city
 #Find the shortest distance of the shortest_tour
 def solve_tsp_tour(cities):
     n = len(cities)
