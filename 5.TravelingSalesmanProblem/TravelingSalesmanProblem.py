@@ -56,40 +56,6 @@ def solve_greedy(start_city, cities):
         current_city = next_city
     return tour #Tour created using the algorithm is returned
 
-#Swaps the endpoints of two edges by reversing a section of nodes, to optimize for the shortest path
-def swap_2opt(tour, city1, city2):
-    n = len(tour)
-    #Set the new tour as the tour from the start of the passed in tour up to the first city
-    new_tour = tour[0:city1]
-    #Add the reversed of the tour from the first city to the second city to the new tour
-    new_tour.extend(reversed(tour[city1:city2 + 1]))
-    #Add the rest of the tour after the swapped cities
-    new_tour.extend(tour[city2+1:])
-    assert len(new_tour) == n
-    return new_tour #New tour after swap is returned
-
-#Solves the tsp using 2-opt algorithm
-#Optimizes the route using the 2-opt swap until no improved tour is found
-def solve_2opt(tour, cities):
-    improvement = True #Initialize the flag to indicate need for improvement
-    best_tour = tour 
-    best_distance = compute_total(tour, cities)
-    while improvement: 
-        improvement = False #Improvement will be addressed in iteration
-        for i in range(len(best_tour) - 1):
-            for j in range(i+1, len(best_tour)):
-                #Iterate through tour and swap
-                new_tour = swap_2opt(best_tour, i, j) 
-                new_distance = compute_total(new_tour, cities) 
-                #If new distance is greater than best distance so far, set new best tour and distance
-                if new_distance < best_distance: 
-                    best_distance = new_distance 
-                    best_tour = new_tour
-                    #Set improvement as true to indicate that there's more room for improvement
-                    improvement = True
-                    break #Improvement found, return to the top of the while loop
-    return best_tour #Best tour after the algorithm is executed is returned
-
 #Swaps certain endpoints between three edges by reversing sections of nodes to optimize for the shortest path
 def swap_3opt(tour, cities, city1, city2, city3):
     #Given a tour with segments 1-2, 3-4, 5-6 
@@ -127,7 +93,7 @@ def swap_3opt(tour, cities, city1, city2, city3):
         new_tour[city1:city3] = newPath #Two-step swap (Case 7)
     return new_tour #New tour after swap is returned
 
-#Solves the tsp using 3-opt algorithm
+#Solves the TSP using the 3-opt algorithm
 def solve_3opt(tour, cities):
     n = len(tour)
     #Iterates between all possible combinations of three edges
@@ -136,6 +102,40 @@ def solve_3opt(tour, cities):
             for k in range(j+1, n + (i>0)):
                 best_tour = swap_3opt(tour, cities, i, j, k)
     return best_tour #Best tour so far is returned
+
+#Swaps the endpoints of two edges by reversing a section of nodes, to optimize for the shortest path
+def swap_2opt(tour, city1, city2):
+    n = len(tour)
+    #Set the new tour as the tour from the start of the passed in tour up to the first city
+    new_tour = tour[0:city1]
+    #Add the reversed of the tour from the first city to the second city to the new tour
+    new_tour.extend(reversed(tour[city1:city2 + 1]))
+    #Add the rest of the tour after the swapped cities
+    new_tour.extend(tour[city2+1:])
+    assert len(new_tour) == n
+    return new_tour #New tour after swap is returned
+
+#Solves the TSP using the 2-opt algorithm
+#Optimizes the route using the 2-opt swap until no improved tour is found
+def solve_2opt(tour, cities):
+    improvement = True #Initialize the flag to indicate need for improvement
+    best_tour = tour 
+    best_distance = compute_total(tour, cities)
+    while improvement: 
+        improvement = False #Improvement will be addressed in iteration
+        for i in range(len(best_tour) - 1):
+            for j in range(i+1, len(best_tour)):
+                #Iterate through tour and swap
+                new_tour = swap_2opt(best_tour, i, j) 
+                new_distance = compute_total(new_tour, cities) 
+                #If new distance is greater than best distance so far, set new best tour and distance
+                if new_distance < best_distance: 
+                    best_distance = new_distance 
+                    best_tour = new_tour
+                    #Set improvement as true to indicate that there's more room for improvement
+                    improvement = True
+                    break #Improvement found, return to the top of the while loop
+    return best_tour #Best tour after the algorithm is executed is returned
 
 
 #Solve TSP using greedy, 3-opt and 2-opt algorithms, starting from a random city
