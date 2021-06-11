@@ -20,8 +20,8 @@
         2. Add next_city to the tour
         3. Set current_city = next_city to iterate
     7. Return the resulting tour
-4. Execute the 3-Opte algorithm using the method solve_3opt() to improve tour
-    1. Refer to the following showing the different 3-Opt cases: [3-Opt Diagram](https://ibb.co/1nBSMPZ)
+4. Execute the 3-Opt algorithm using the method solve_3opt() to improve tour
+    1. Refer to the following showing the different 3-Opt cases (a, b and c refer to city1, city2 and city3 in my code): [3-Opt Diagram](https://ibb.co/1nBSMPZ)
     2. Iterate for all possible combinations of three edges in the given tour
         1. Call swap_3opt() for all combination of the three segments 
         2. Create a subset of tour with segments 1-2, 3-4 and 5-6
