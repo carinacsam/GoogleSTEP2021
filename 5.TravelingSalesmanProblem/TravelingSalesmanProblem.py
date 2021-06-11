@@ -146,7 +146,8 @@ def solve_tsp_tour(cities):
     for start_city in random.sample(range(n), n):
         #Run Greedy first, and then 2opt to improve the tour
         tour = solve_greedy(start_city, cities)
-        tour = solve_2opt(tour,cities)
+        tour = solve_3opt(tour, cities)
+        tour = solve_2opt(tour, cities)
         total_distance = compute_total(tour, cities)
         #If the total distance calculated is the shortest so far
         if shortest_distance < 0 or shortest_distance > total_distance:
