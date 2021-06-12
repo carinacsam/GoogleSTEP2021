@@ -17,9 +17,9 @@ def distance(city1, city2):
 def compute_total(tour, cities):
     total_distance = 0
     for i in range(len(tour) - 1):
-        #Adds distance between current tour and next tour to total distance
+        #Adds distance between current city and next city to total distance
         total_distance += distance(cities[tour[i]], cities[tour[i + 1]])
-    #Adds distance between first tour and the tour before it
+    #Adds distance between first city and the previous city
     total_distance += distance(cities[tour[-1]], cities[tour[0]])
     return total_distance #Returns the total distance computed
 
