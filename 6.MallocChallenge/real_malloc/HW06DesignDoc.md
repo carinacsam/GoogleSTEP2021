@@ -10,7 +10,7 @@ My implementation for this challenge combined both the "best fit" algorithm, as 
 
 *Algorithm (Best Fit)*
 
-1. Traverse the free list and find the best fit slot in the free list 
+1. Traverse the free list and find the best fit(smallest) slot in the free list 
     1. If the metadata size is greater than or equal to the size
     2. Set the best_fit_metadata equal to the metadata
     3. Set the prev_fit_metadata equal to the prev pointer
@@ -50,7 +50,7 @@ My implementation for this challenge combined both the "best fit" algorithm, as 
     - Range: void
     
 - `my_scan_and_merge()`
-    - Domain Parameter(s): *ptr
+    - Domain Parameter(s): 
     - Range: void
 
 - `my_initialize()`
