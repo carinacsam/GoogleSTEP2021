@@ -42,11 +42,11 @@ My implementation for this challenge combined both the "best fit" algorithm, as 
 
 *Functions*
 
-- `my_remove_freelist()`
+- `my_remove_from_freelist()`
     - Domain Parameter(s): *metadata, *prev
     - Range: void
     
-- `my_add_freelist()`
+- `my_add_to_freelist()`
     - Domain Parameter(s): *metadata
     - Range: void
     
