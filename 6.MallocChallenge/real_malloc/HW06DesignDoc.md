@@ -5,6 +5,7 @@
 <u>**Malloc Challenge**</u>
 -------
 *Summary*
+
 My implementation for this challenge combined both the "best fit" algorithm, as well as "scan and merge." Most of the code was adapted from simple_malloc.c and the changes that I made to it was for the purpose of optimizing efficiency, as well as memory storage. My scan and merge method in particular improved memory utilization by merging free blocks into one block, looking for the best fit for the smallest available memory slot and avoiding memory fragmentation in the process.
 
 *Algorithm (Best Fit)*
