@@ -148,7 +148,7 @@ void *my_malloc(size_t size) {
         //If  metadata's size is greater than or equal to requested size
         if (metadata->size >= size) {
             //If the best_fit_metadata is empty
-            if (best_fit_metadata == NULL) || (best_fit_metadata->size > metadata->size){
+            if (best_fit_metadata == NULL || best_fit_metadata->size > metadata->size){
                 //Set current best fit to the metadata
                 best_fit_metadata = metadata;
                 //Set previous fit to the metadata's prev pointer
