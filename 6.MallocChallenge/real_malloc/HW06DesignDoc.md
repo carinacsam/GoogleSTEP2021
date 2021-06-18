@@ -12,9 +12,9 @@ My implementation for this challenge combined both the "best fit" algorithm, as 
 
 1. Traverse the free list and find the best fit slot in the free list 
     1. If the metadata size is greater than or equal to the size
-        2. Set the best_fit_metadata equal to the metadata
-        3. Set the prev_fit_metadata equal to the prev pointer
-    2. Repeat until  we've reached the end of the free list 
+    2. Set the best_fit_metadata equal to the metadata
+    3. Set the prev_fit_metadata equal to the prev pointer
+    4. Repeat until  we've reached the end of the free list 
      
 2. If we're unable to find a memory block on the free list
     1. Request more memory from the system
@@ -42,11 +42,11 @@ My implementation for this challenge combined both the "best fit" algorithm, as 
 *Functions*
 
 - `my_remove_freelist()`
-    - Domain Parameter(s): *block
+    - Domain Parameter(s): *metadata, *prev
     - Range: void
     
 - `my_add_freelist()`
-    - Domain Parameter(s): *block
+    - Domain Parameter(s): *metadata
     - Range: void
     
 - `my_scan_and_merge()`
@@ -59,7 +59,7 @@ My implementation for this challenge combined both the "best fit" algorithm, as 
 
 - `my_malloc()`
     - Domain Parameter(s): size
-    - Range: my_memory_block
+    - Range: ptr
  
 - `my_free()`
     - Domain Parameter(s): *ptr
