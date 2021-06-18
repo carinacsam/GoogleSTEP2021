@@ -14,7 +14,8 @@ My implementation for this challenge combined both the "best fit" algorithm, as 
     1. If the metadata size is greater than or equal to the size
     2. Set the best_fit_metadata equal to the metadata
     3. Set the prev_fit_metadata equal to the prev pointer
-    4. Repeat until  we've reached the end of the free list 
+    4. Find the smallest free slot(best_fit_metadata) that can be allocated  
+    5. Repeat until  we've reached the end of the free list 
      
 2. If we're unable to find a memory block on the free list
     1. Request more memory from the system
