@@ -21,7 +21,7 @@ My implementation for this challenge combined both the "best fit" algorithm, as 
     2. Add the new memory  to the free list
     3. Call malloc again
 
-4. If pointer is the beginning of the allocated object 
+4. After finding the best fit slot 
     1. Set pointer equal to best_fit_metadata + 1
     2. Set best_fit_metadata-> size equal to size 
     3. Remove the memory slot from free list
