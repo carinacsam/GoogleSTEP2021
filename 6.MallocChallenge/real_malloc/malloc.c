@@ -39,9 +39,9 @@ void munmap_to_system(void *ptr, size_t size);
 //      |next| points to the next free slot.
 //      |prev| points to the prev free slot.
 typedef struct my_metadata_t {
-  size_t size;
-  struct my_metadata_t *next;
-  struct my_metadata_t *prev;
+    size_t size;
+    struct my_metadata_t *next;
+    struct my_metadata_t *prev;
 } my_metadata_t;
 
 // The global information of the simple malloc.
@@ -49,8 +49,8 @@ typedef struct my_metadata_t {
 //   *  |dummy| is a dummy free slot (only used to make the free list
 //      implementation simpler).
 typedef struct my_heap_t {
-  my_metadata_t *free_head;
-  my_metadata_t dummy;
+    my_metadata_t *free_head;
+    my_metadata_t dummy;
 } my_heap_t;
 
 my_heap_t my_heap;
@@ -86,12 +86,13 @@ void my_add_to_free_list(my_metadata_t *metadata) {
 // @source: https://github.com/xharaken/step2/blob/master/malloc_challenge.c
 void my_remove_from_free_list(my_metadata_t *metadata,
                                   my_metadata_t *prev) {
-  if (prev) {
-    prev->next = metadata->next;
-  } else {
-    my_heap.free_head = metadata->next;
-  }
-  metadata->next = NULL;
+    if (prev) {
+        prev->next = metadata->next;
+    }
+    else {
+        my_heap.free_head = metadata->next;
+    }
+    metadata->next = NULL;
 }
 
 // Scan continuous addressed free blocks
@@ -122,10 +123,10 @@ void my_scan_and_merge() {
 
 // This is called only once at the beginning of each challenge.
 void my_initialize() {
-  my_heap.free_head = &my_heap.dummy;
-  my_heap.dummy.size = 0;
-  my_heap.dummy.next = NULL;
-  my_heap.dummy.prev = NULL;
+    my_heap.free_head = &my_heap.dummy;
+    my_heap.dummy.size = 0;
+    my_heap.dummy.next = NULL;
+    my_heap.dummy.prev = NULL;
 }
 
 // This is called every time an object is allocated. |size| is guaranteed
@@ -144,21 +145,13 @@ void *my_malloc(size_t size) {
         metadata = metadata->next ;
         if (!metadata) //Break from loop if end of free list 
             break;
-
         //If  metadata's size is greater than or equal to requested size
         if (metadata->size >= size) {
             //If the best_fit_metadata is empty
-            if (best_fit_metadata == NULL) {
-                //Set previous fit to the metadata's prev pointer 
-                prev_fit_metadata = prev; 
+            if (best_fit_metadata == NULL) || (best_fit_metadata->size > metadata->size){
                 //Set current best fit to the metadata
                 best_fit_metadata = metadata;
-            }
-            //Otherwise if the metadata's size is less than the best fit's size
-            else  if (metadata->size < best_fit_metadata->size) {
-                //Set best fit to metadata
-                best_fit_metadata = metadata;
-                //Set previous fit to metadata's prev pointer
+                //Set previous fit to the metadata's prev pointer
                 prev_fit_metadata = prev;
             }
         }
@@ -217,16 +210,16 @@ void *my_malloc(size_t size) {
 // any library functions other than mmap_from_system / munmap_to_system.
 // @source: https://github.com/xharaken/step2/blob/master/malloc_challenge.c
 void my_free(void *ptr) {
-  // Look up the metadata. The metadata is placed just prior to the object.
-  //
-  // ... | metadata | object | ...
-  //     ^          ^
-  //     metadata   ptr
-  my_metadata_t *metadata = (my_metadata_t *)ptr - 1;
-  // Add the free slot to the free list.
-  my_add_to_free_list(metadata);
-  // Scan continuous free blocks and merge
-  my_scan_and_merge();
+    // Look up the metadata. The metadata is placed just prior to the object.
+    //
+    // ... | metadata | object | ...
+    //     ^          ^
+    //     metadata   ptr
+    my_metadata_t *metadata = (my_metadata_t *)ptr - 1;
+    // Add the free slot to the free list.
+    my_add_to_free_list(metadata);
+    // Scan continuous free blocks and merge
+    my_scan_and_merge();
 }
 
 void my_finalize() {}
