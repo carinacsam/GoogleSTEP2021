@@ -6,7 +6,7 @@
 -------
 *Summary*
 
-My implementation for this challenge combined both the "best fit" algorithm, as well as "merge." Most of the code was adapted from simple_malloc.c and the changes that I made to it was for the purpose of optimizing efficiency, as well as memory utilization. The best fit algorithm looks for the smallest available memory slot in the free list. The naive best fit algorithm was slow so I added the my_scan_and_merge function to improve efficiency and memory utilization by merging the free blocks into one block, and avoiding memory fragmentation in the process. The my_add_to_freelist function was also updated to sort the free list by address for faster access. 
+My implementation for this challenge combined both the "best fit" algorithm, as well as "merge." Most of the code was adapted from simple_malloc.c and the changes that I made to it was for the purpose of optimizing efficiency, as well as memory utilization. The best fit algorithm looks for the smallest available memory slot in the free list. The naive best fit algorithm was slow so I added the my_scan_and_merge function to improve efficiency and memory utilization by merging the free blocks into one block, and avoiding memory fragmentation in the process. The my_add_to_freelist function was also updated to insert the free block sorted by address for faster access. 
 
 *Analysis*
 
