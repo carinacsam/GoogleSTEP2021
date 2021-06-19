@@ -6,11 +6,11 @@
 -------
 *Summary*
 
-My implementation for this challenge combined both the "best fit" algorithm, as well as "merge." Most of the code was adapted from simple_malloc.c and the changes that I made to it was for the purpose of optimizing efficiency, as well as memory utilization. The best fit algorithm looks for the smallest available memory slot in the free list. The naive best-fit algorithm was slow so I added the my_scan_and_merge method to improved memory utilization by merging the free blocks into one block, and avoiding memory fragmentation in the process. The my_add_to_freelist function was also updated to sort the free list by address for faster merging. 
+My implementation for this challenge combined both the "best fit" algorithm, as well as "merge." Most of the code was adapted from simple_malloc.c and the changes that I made to it was for the purpose of optimizing efficiency, as well as memory utilization. The best fit algorithm looks for the smallest available memory slot in the free list. The naive best fit algorithm was slow so I added the my_scan_and_merge function to improve efficiency and memory utilization by merging the free blocks into one block, and avoiding memory fragmentation in the process. The my_add_to_freelist function was also updated to sort the free list by address for faster access. 
 
 *Analysis*
 
-I compared the results of my best fit with merge algorithm, with the first fit and worst fit algorithms and the results are displayed in the table below. The first fit algorithm finds the first free slot where the object can fit. As you can see from the results, the execution time is fast for challenge 1 to 3 but it became slower in challenge 4 and 5. The memory utilization also decreased and it was not efficient because of memory fragmentation. The worst fit algorithm finds the largest slot where the object fits. It was the slowest algorithm and the memory utilization was also the worst compared to the others. My improved best fit and merge algorithm had better memory utilization compared to the other algorithms and the execution time was also fast in challenge 4 and 5. My algorithm runs on O(n) time and it could be further improved to use segregated free lists for O(1) time.
+I compared the results of my best fit with merge algorithm, with the first fit and worst fit algorithms and the results are displayed in the table below. The first fit algorithm finds the first free slot where the object can fit. As you can see from the results, the execution time is fast for challenge 1 to 3 but it became slower in challenge 4 and 5. The memory utilization also decreased and it was not efficient because of memory fragmentation. The worst fit algorithm finds the largest slot where the object fits. It was the slowest algorithm and the memory utilization was also the worst compared to the others. My best fit and merge algorithm had better memory utilization compared to the other algorithms and the execution time was also fast in challenge 4 and 5. My algorithm runs on O(n) time and it could be further improved to use segregated free lists for O(1) time.
 
 
 *Results*
@@ -101,7 +101,7 @@ typedef struct my_heap_t {
 - `my_add_to_freelist()`
     - Domain Parameter(s): *metadata
     - Range: void
-    - Add a free slot to the free list sorted by address for faster merging
+    - Add a free slot to the free list sorted by address for faster access
 
 - `my_scan_and_merge()`
     - Domain Parameter(s):
